@@ -1,5 +1,6 @@
 <script lang="ts">
   import { push } from "svelte-spa-router";
+  import ConnectButton from "./ConnectButton.svelte";
   import NavBar from "./NavBar.svelte";
 </script>
 
@@ -12,7 +13,7 @@
   />
   <NavBar />
   <div class="title">Limeblock Marketplace</div>
-  <!-- <ConnectButton /> -->
+  <ConnectButton />
 </div>
 
 <style>
