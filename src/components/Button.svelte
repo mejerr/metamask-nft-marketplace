@@ -1,10 +1,14 @@
 <script lang="ts">
   export let title: string = "";
   export let arrow: boolean = false;
-  export const isActive: boolean = false;
+  export let isActive: boolean = false;
 </script>
 
-<div class="button" class:active={"isActive"} on:click>
+<div
+  class={["button", $$props.class].join(" ")}
+  class:active={isActive}
+  on:click
+>
   {#if title}
     <div class="title">{title}</div>
   {/if}

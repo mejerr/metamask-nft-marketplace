@@ -1,8 +1,7 @@
-<script>
+<script lang="ts">
   import { push } from "svelte-spa-router";
+  import NavBar from "./NavBar.svelte";
 </script>
-
-<scripts />
 
 <div class="header-wrapper">
   <img
@@ -11,7 +10,7 @@
     alt="logo"
     on:click={() => push("/home")}
   />
-  <!-- <NavBar /> -->
+  <NavBar />
   <div class="title">Limeblock Marketplace</div>
   <!-- <ConnectButton /> -->
 </div>
