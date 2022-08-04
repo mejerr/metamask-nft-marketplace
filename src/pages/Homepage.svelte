@@ -46,7 +46,7 @@
   </div>
 </div>
 
-<style descendants>
+<style>
   .homepage-wrapper {
     width: 100%;
     height: 100%;
@@ -60,10 +60,6 @@
     margin: 0 auto;
     width: 100%;
     max-width: min(1280px, 100% - 40px);
-
-    /* @media (max-width: 800px) {
-    flex-direction: column;
-    } */
   }
 
   .left-panel {
@@ -72,21 +68,11 @@
     width: 50%;
     height: 50%;
     padding: 70px 20px 0;
-
-    /* @media (max-width: 800px) {
-    width: 100%;
-    padding: 40px 20px 0;
-    align-items: center;
-    } */
   }
 
   .title {
     font-size: 45px;
     max-width: 100%;
-
-    /* @media (max-width: 800px) {
-      text-align: center;
-    } */
   }
 
   .subtitle {
@@ -150,40 +136,12 @@
     width: 50%;
     height: 50%;
     padding-top: 50px;
-
-    /* @media (max-width: 800px) {
-      width: 100%;
-      align-items: center;
-    } */
   }
 
   .image-wrapper {
     width: 550px;
     height: 550px;
     cursor: pointer;
-
-    /* @media (max-width: 1300px) {
-    max-width: 550px;
-    max-height: 440px;
-    }
-
-    @media (max-width: 1100px) {
-      max-width: 460px;
-      max-height: 400px;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 1000px) {
-      max-width: 360px;
-      max-height: 370px;
-      margin-top: 30px;
-    }
-
-    @media (max-width: 420px) {
-      max-width: 280px;
-      max-height: 280px;
-      margin-top: 20px;
-    } */
   }
 
   .nft-image {
@@ -197,5 +155,56 @@
     background-size: cover;
     object-fit: cover;
     flex-shrink: 0;
+  }
+
+  @media (max-width: 800px) {
+    .homepage-content {
+      flex-direction: column;
+    }
+    .left-panel {
+      width: 100%;
+      padding: 40px 20px 0;
+      align-items: center;
+    }
+
+    .title {
+      text-align: center;
+    }
+
+    .right-panel {
+      width: 100%;
+      align-items: center;
+    }
+
+    @media (max-width: 1300px) {
+      .image-wrapper {
+        max-width: 550px;
+        max-height: 440px;
+      }
+    }
+
+    @media (max-width: 1100px) {
+      .image-wrapper {
+        max-width: 460px;
+        max-height: 400px;
+        margin-top: 30px;
+      }
+    }
+
+    @media (max-width: 1000px) {
+      .image-wrapper {
+        max-width: 360px;
+        max-height: 370px;
+        margin-top: 30px;
+      }
+    }
+
+    @media (max-width: 420px) {
+      .image-wrapper {
+        max-width: 280px;
+        max-height: 280px;
+        margin-top: 20px;
+      }
+    }
   }
 </style>

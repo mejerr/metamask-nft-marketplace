@@ -136,20 +136,6 @@
 <main>
   <Header />
   <Router {routes} />
-  <!-- {#if connected}
-    <div>
-      <span class="dotConnected" />
-      Connected Account: {userAddress}
-      Connected userBalance: {userBalance}
-      Connected chainId: {chainId}
-      Connected network: {network}
-      <button on:click={resetApp}>Disconnect:</button>
-    </div>
-  {:else}
-    <button class="button buttonMetaMask" on:click={connectWallet}>
-      Connect MetaMask
-    </button>
-  {/if} -->
 </main>
 
 <style>
@@ -158,20 +144,5 @@
     max-width: 240px;
     margin: 0 auto;
     padding: 0;
-  }
-
-  button {
-    width: 150px;
-    height: 150px;
-    border-radius: 10px;
-    border: 1px solid black;
-    background: #ff3e00;
-    cursor: pointer;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
   }
 </style>
