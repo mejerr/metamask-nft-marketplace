@@ -1,6 +1,7 @@
 <script lang="ts">
   import { onMount } from "svelte";
   import { ethers, logger } from "ethers";
+  import ContractsSDK from "./lib/SDK/ContractsSDK";
 
   let connectWalletError: any;
   const { ethereum } = window;
@@ -97,13 +98,14 @@
 
         const connectedLibrary: any = new ethers.providers.Web3Provider(ethereum);
 				const connectedSigner = connectedLibrary.getSigner();
-				console.log( await connectedLibrary.getNetwork());
+
 				network = (await connectedLibrary.getNetwork()).name;
         userBalance = +ethers.utils.formatEther((await connectedSigner.getBalance()).toString());
         chainId = await connectedSigner.getChainId();
 	  		library = connectedLibrary;
 	  		signer = connectedSigner;
 	  		connected = true;
+        contractsSDK =  new ContractsSDK(signer, userAddress)
 
 				await subscribeToProviderEvents(provider);
       })
