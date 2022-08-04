@@ -4,6 +4,7 @@
   import ContractsSDK from "./lib/SDK/ContractsSDK";
   import Router from "svelte-spa-router";
   import routes from "./routes";
+  import { Header } from "./components";
 
   let connectWalletError: any;
   const { ethereum } = window;
@@ -133,6 +134,7 @@
 </script>
 
 <main>
+  <Header />
   <Router {routes} />
   <!-- {#if connected}
     <div>
@@ -153,9 +155,9 @@
 <style>
   main {
     text-align: center;
-    padding: 1em;
     max-width: 240px;
     margin: 0 auto;
+    padding: 0;
   }
 
   button {
