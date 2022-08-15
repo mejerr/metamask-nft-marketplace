@@ -19,7 +19,6 @@
 <style>
   .header-wrapper {
     position: relative;
-    width: 100%;
     height: 70px;
     display: flex;
     justify-content: space-between;

@@ -2,12 +2,18 @@
   import { fade } from "svelte/transition";
   import Button from "../components/Button.svelte";
   import { push } from "svelte-spa-router";
+  import { walletConnectStore } from "../store/wallet";
+  import type { OnSuccess } from "../lib/types/connect.type";
 
-  const onClick = (pathname: string) => {
-    // if (!connected) {
-    //   onConnect({ onSuccess: () => history.push(pathname) });
-    //   return;
-    //  }
+  $: connected = $walletConnectStore.connected;
+  $: connectWallet = ({ onSuccess }: OnSuccess) =>
+    $walletConnectStore.connectWallet({ onSuccess });
+
+  const onClick = async (pathname: string) => {
+    if (!connected) {
+      connectWallet({ onSuccess: () => push(pathname) });
+      return;
+    }
 
     push(pathname);
   };

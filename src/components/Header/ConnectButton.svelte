@@ -1,10 +1,24 @@
 <script lang="ts">
+  import { push } from "svelte-spa-router";
   import { ellipseAddress } from "../../lib/helpers/utilities";
-
+  import type { OnSuccess } from "../../lib/types/connect.type";
+  import { walletConnectStore } from "../../store/wallet";
   import Button from "../Button.svelte";
 
-  let connected: boolean = false;
-  let userAddress: string = "0x129312312dasdhas0123";
+  $: connected = $walletConnectStore.connected;
+  $: userAddress = $walletConnectStore.userAddress;
+  $: connectWallet = ({ onSuccess }: OnSuccess) =>
+    $walletConnectStore.connectWallet(onSuccess);
+  $: disconnectWallet = ({ onSuccess }: OnSuccess) =>
+    $walletConnectStore.disconnectWallet({ onSuccess });
+
+  const onLogin = () => {
+    connectWallet({ onSuccess: () => push("/marketplace") });
+  };
+
+  const onLogout = () => {
+    disconnectWallet({ onSuccess: () => push("/home") });
+  };
 </script>
 
 <div class="connect-btn-wrapper">
@@ -13,12 +27,12 @@
       <div class="address" class:connected>
         {ellipseAddress(userAddress, 8)}
       </div>
-      <div class="disconnect-btn">Disconnect</div>
+      <div class="disconnect-btn" on:click={onLogout}>Disconnect</div>
     </div>
   {:else}
     <div class="button-wrapper">
       <div class="login">
-        <Button class={"login-btn"} title={"Login"} />
+        <Button class={"login-btn"} title={"Login"} on:click={onLogin} />
       </div>
     </div>
   {/if}

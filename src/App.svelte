@@ -1,42 +1,48 @@
 <script lang="ts">
-  import { onMount } from "svelte";
-  import { ethers, logger } from "ethers";
+  import { onMount, onDestroy } from "svelte";
+  import { ethers } from "ethers";
   import ContractsSDK from "./lib/SDK/ContractsSDK";
   import Router from "svelte-spa-router";
   import routes from "./routes";
   import { Header } from "./components";
+  import { walletConnectStore } from "./store/wallet";
+  import type { IConnectData } from "./lib/types/connect.type";
 
   let connectWalletError: any;
   const { ethereum } = window;
 
-  let provider: any = ethereum;
-
-  let userAddress: string = "";
-  let userBalance: number = 0;
-  let signer: any = null;
-  let library: any = null;
-  let connected: boolean = false;
-  let chainId: number = 1;
-  let network: string = "";
-  let contractsSDK: any = null;
+  let connectedData: IConnectData = {
+    provider: null,
+    userAddress: "",
+    userBalance: 0,
+    signer: null,
+    library: null,
+    connected: true,
+    chainId: 1,
+    network: "",
+    contractsSDK: {},
+    connectWallet: ({ onSuccess = (): void => {} }): void => onSuccess(),
+    disconnectWallet: ({ onSuccess = (): void => {} }): void => onSuccess(),
+  };
 
   const changedAccount = async (accounts: string[]) => {
     if (!accounts.length) {
       // Metamask Lock fire an empty accounts array
       await resetApp();
     } else {
-      connected = true;
-      userAddress = accounts[0];
+      connectedData.connected = true;
+      connectedData.userAddress = accounts[0];
       window.location.reload();
     }
   };
 
   const networkChanged = async () => {
-    if (provider) {
-      library = new ethers.providers.Web3Provider(ethereum);
-      const connectedNetwork = await library.getNetwork();
-      chainId = connectedNetwork.chainId;
-      network = connectedNetwork.name;
+    if (connectedData.provider) {
+      const connectedLibrary = new ethers.providers.Web3Provider(ethereum);
+      const connectedNetwork = await connectedLibrary.getNetwork();
+      connectedData.library = connectedLibrary;
+      connectedData.chainId = connectedNetwork.chainId;
+      connectedData.network = connectedNetwork.name;
     }
   };
 
@@ -56,22 +62,13 @@
     provider.off("close", close);
   };
 
-  const resetApp = async (/*{ onSuccess = () => {} } = {}*/) => {
+  const resetApp = async ({ onSuccess = () => {} } = {}) => {
     localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER");
     localStorage.removeItem("cachedProvider");
 
-    // onSuccess();
+    onSuccess();
 
     await unSubscribe(ethereum);
-
-    provider = null;
-    userAddress = "";
-    userBalance = 0;
-    signer = null;
-    library = null;
-    connected = false;
-    chainId = 1;
-    network = "";
   };
 
   const subscribeToProviderEvents = async (provider: any) => {
@@ -84,40 +81,50 @@
     provider.on("disconnect", close);
   };
 
-  const connectWallet = async () => {
+  const connectWallet = async ({ onSuccess = () => {} } = {}) => {
     if (!localStorage.getItem("WEB3_CONNECT_CACHED_PROVIDER")) {
       localStorage.setItem("WEB3_CONNECT_CACHED_PROVIDER", "injected");
       localStorage.setItem("cachedProvider", "true");
     }
-    connected = false;
+    connectedData.connected = false;
 
     await ethereum
       .request({ method: "eth_requestAccounts" })
       .then(async (accountList: any) => {
         const [firstAccount] = accountList;
-        userAddress = firstAccount;
-        connected = true;
-
         const connectedLibrary: any = new ethers.providers.Web3Provider(
           ethereum
         );
         const connectedSigner = connectedLibrary.getSigner();
 
-        network = (await connectedLibrary.getNetwork()).name;
-        userBalance = +ethers.utils.formatEther(
-          (await connectedSigner.getBalance()).toString()
-        );
-        chainId = await connectedSigner.getChainId();
-        library = connectedLibrary;
-        signer = connectedSigner;
-        connected = true;
-        contractsSDK = new ContractsSDK(signer, userAddress);
+        const connectedData: IConnectData = {
+          provider: ethereum,
+          userAddress: firstAccount,
+          network: (await connectedLibrary.getNetwork()).name,
+          userBalance: +ethers.utils.formatEther(
+            (await connectedSigner.getBalance()).toString()
+          ),
+          chainId: await connectedSigner.getChainId(),
+          library: connectedLibrary,
+          signer: connectedSigner,
+          connected: true,
+          contractsSDK: new ContractsSDK(connectedSigner, firstAccount),
+        };
 
-        await subscribeToProviderEvents(provider);
+        await subscribeToProviderEvents(connectedData.provider);
+
+        walletConnectStore.update((details) => ({
+          ...details,
+          ...connectedData,
+        }));
+
+        onSuccess();
       })
       .catch((error: any) => {
-        connected = false;
+        connectedData.connected = false;
         connectWalletError = error;
+        localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER");
+        localStorage.removeItem("cachedProvider");
         console.log("error connecting wallet");
       });
   };
@@ -131,6 +138,16 @@
       initConnection();
     }
   });
+
+  const unsubscribe = walletConnectStore.subscribe((data) => {
+    connectedData = data;
+    connectedData.connectWallet = ({ onSuccess }: { onSuccess: () => {} }) =>
+      connectWallet({ onSuccess });
+    connectedData.disconnectWallet = ({ onSuccess }: { onSuccess: () => {} }) =>
+      resetApp({ onSuccess });
+  });
+
+  onDestroy(unsubscribe);
 </script>
 
 <main>
@@ -141,7 +158,6 @@
 <style>
   main {
     text-align: center;
-    max-width: 240px;
     margin: 0 auto;
     padding: 0;
   }
