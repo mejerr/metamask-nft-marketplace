@@ -1,12 +1,13 @@
-// Components
+// Pages
 import Homepage from './pages/Homepage.svelte';
+import Marketplace from './pages/Marketplace.svelte';
 
-// Export the route definition object
 export default {
     // Exact path
     '/': Homepage,
 
-    '/marketplace': Homepage,
+    '/marketplace': Marketplace,
+    '/home': Homepage,
     '/create': Homepage,
 
     // Catch-all, must be last

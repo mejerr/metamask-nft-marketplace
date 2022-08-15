@@ -1,6 +1,6 @@
 <script lang="ts">
-  import { fade } from "svelte/transition";
-  import Button from "../components/Button.svelte";
+  import { fade, fly } from "svelte/transition";
+  import { Button } from "../components";
   import { push } from "svelte-spa-router";
   import { walletConnectStore } from "../store/wallet";
   import type { OnSuccess } from "../lib/types/connect.type";
@@ -19,7 +19,7 @@
   };
 </script>
 
-<div class="homepage-wrapper" transition:fade>
+<div class="homepage-wrapper" in:fly={{ y: 0, duration: 1000 }}>
   <div class="homepage-content">
     <div class="left-panel">
       <div class="title">Discover, collect, and sell extraordinary NFTs</div>
