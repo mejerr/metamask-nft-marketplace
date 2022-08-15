@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { fade, fly } from "svelte/transition";
+  import { fly } from "svelte/transition";
   import { Button } from "../components";
   import { push } from "svelte-spa-router";
   import { walletConnectStore } from "../store/wallet";

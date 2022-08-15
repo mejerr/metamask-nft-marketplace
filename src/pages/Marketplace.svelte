@@ -1,9 +1,31 @@
-<script>
-  import { fade, fly } from "svelte/transition";
+<script lang="ts">
+  import { fly } from "svelte/transition";
+  import { Collections } from "../components";
+  import type { ICollection } from "../lib/types/connect.type";
+
+  let collections: ICollection[] = [
+    {
+      collectionId: 1,
+      name: "lucky clovers",
+      description: "lucky clovers description",
+      creator: "lucky clovers creator",
+      image: "assets/nft-homepage.png",
+    },
+    {
+      collectionId: 2,
+      name: "lucky clovers",
+      description: "lucky clovers description",
+      creator: "lucky clovers creator",
+      image: "assets/nft-homepage.png",
+    },
+  ];
 </script>
 
 <div class="marketplace-wrapper" in:fly={{ y: 0, duration: 1000 }}>
-  <div class="title">Explore collections</div>
+  {#if collections.length}
+    <div class="title">Explore collections</div>
+  {/if}
+  <Collections {collections} />
 </div>
 
 <style>

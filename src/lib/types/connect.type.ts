@@ -17,3 +17,11 @@ export interface IConnectData {
     connectWallet?: (({ onSuccess }: OnSuccess) => void) | any;
     disconnectWallet?: (({ onSuccess }: OnSuccess) => void) | any;
 }
+
+export interface ICollection {
+  collectionId: number;
+  name: string;
+  description: string;
+  creator: string;
+  image: string;
+}
