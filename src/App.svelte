@@ -30,8 +30,11 @@
       // Metamask Lock fire an empty accounts array
       await resetApp();
     } else {
-      connectedData.connected = true;
-      connectedData.userAddress = accounts[0];
+      walletConnectStore.update((details) => ({
+        ...details,
+        connected: true,
+        userAddress: accounts[0],
+      }));
       window.location.reload();
     }
   };
@@ -40,9 +43,13 @@
     if (connectedData.provider) {
       const connectedLibrary = new ethers.providers.Web3Provider(ethereum);
       const connectedNetwork = await connectedLibrary.getNetwork();
-      connectedData.library = connectedLibrary;
-      connectedData.chainId = connectedNetwork.chainId;
-      connectedData.network = connectedNetwork.name;
+
+      walletConnectStore.update((details) => ({
+        ...details,
+        library: connectedLibrary,
+        chainId: connectedNetwork.chainId,
+        network: connectedNetwork.name,
+      }));
     }
   };
 

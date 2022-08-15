@@ -1,7 +1,6 @@
 import App from './App.svelte';
 
 declare global {
-	// tslint:disable-next-line
 	interface Window {
 	  web3: any;
 	  ethereum: any;
