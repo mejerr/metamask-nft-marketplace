@@ -32,7 +32,7 @@
   {:else}
     <div class="button-wrapper">
       <div class="login">
-        <Button class={"login-btn"} title={"Login"} on:click={onLogin} />
+        <Button class="login-btn" title={"Login"} on:click={onLogin} />
       </div>
     </div>
   {/if}

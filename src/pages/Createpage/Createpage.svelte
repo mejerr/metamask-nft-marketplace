@@ -63,12 +63,4 @@
     justify-content: center;
     align-items: center;
   }
-
-  /* .create {
-    display: block;
-  }
-
-  .create.active {
-    display: block;
-  } */
 </style>

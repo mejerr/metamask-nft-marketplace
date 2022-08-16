@@ -32,7 +32,7 @@
     font-weight: 600;
     transition-property: border-bottom;
     transition-duration: 0.3s;
-    color: rgba("0, 0, 0, 0.6");
+    color: rgba(0, 0, 0, 0.6);
   }
 
   .button.active {
