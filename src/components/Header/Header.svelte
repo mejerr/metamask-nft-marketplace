@@ -52,13 +52,17 @@
     font-size: 40px;
     text-align: center;
     cursor: pointer;
+  }
 
-    /* @media (max-width: 1000px) {
+  @media (max-width: 1000px) {
+    .title {
       font-size: 34px;
     }
+  }
 
-    @media (max-width: 670px) {
+  @media (max-width: 670px) {
+    .title {
       font-size: 28px;
-    } */
+    }
   }
 </style>

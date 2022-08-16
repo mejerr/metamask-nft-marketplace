@@ -35,7 +35,6 @@
     border: 1px solid rgb(229, 232, 235);
     border-radius: 10px;
     cursor: pointer;
-    padding-top: 10px;
   }
 
   .collection-wrapper:hover {

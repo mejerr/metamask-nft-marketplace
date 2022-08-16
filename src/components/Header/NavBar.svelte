@@ -58,4 +58,10 @@
   .navbar-wrapper :global(.nav-collection) {
     width: 100px;
   }
+
+  @media (max-width: 900px) {
+    .navbar-wrapper {
+      display: none;
+    }
+  }
 </style>

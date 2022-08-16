@@ -82,17 +82,6 @@
     display: flex;
     align-items: center;
     cursor: pointer;
-
-    /* @media (max-width: 1000px) {
-      width: 60px;
-      height: 70px;
-      justify-content: center;
-      }
-
-    @media (max-width: 400px) {
-      width: 40px;
-      height: 70px;
-    } */
   }
 
   .login {
@@ -106,5 +95,21 @@
 
   .login :global(.login-btn:hover) {
     color: #fff;
+  }
+
+  @media (max-width: 1000px) {
+    .login :global(.login-btn) {
+      width: 60px;
+      height: 70px;
+      justify-content: center;
+    }
+  }
+
+  @media (max-width: 400px) {
+    .login :global(.login-btn) {
+      width: 40px;
+      height: 70px;
+      justify-content: center;
+    }
   }
 </style>

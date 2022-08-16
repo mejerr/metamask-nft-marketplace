@@ -25,6 +25,7 @@
     display: grid;
     grid-template-columns: repeat(4, 1fr);
     grid-gap: 30px;
+    padding-top: 10px;
   }
 
   .empty {

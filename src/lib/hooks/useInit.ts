@@ -92,21 +92,17 @@ export const useInit = () => {
     connectedData.connected = false;
 
     await ethereum
-      .request({ method: "eth_requestAccounts" })
-      .then(async (accountList: any) => {
-        const [firstAccount] = accountList;
-        const connectedLibrary: any = new ethers.providers.Web3Provider(
-          ethereum
-        );
+    .request({ method: "eth_requestAccounts" })
+    .then(async (accountList: any) => {
+      const [firstAccount] = accountList;
+      const connectedLibrary: any = new ethers.providers.Web3Provider(ethereum);
         const connectedSigner = connectedLibrary.getSigner();
 
         const connectedData: IConnectData = {
           provider: ethereum,
           userAddress: firstAccount,
           network: (await connectedLibrary.getNetwork()).name,
-          userBalance: +ethers.utils.formatEther(
-            (await connectedSigner.getBalance()).toString()
-          ),
+          userBalance: +ethers.utils.formatEther((await connectedSigner.getBalance()).toString()),
           chainId: await connectedSigner.getChainId(),
           library: connectedLibrary,
           signer: connectedSigner,
@@ -118,17 +114,17 @@ export const useInit = () => {
 
         walletConnectStore.update((details) => ({
           ...details,
-          ...connectedData,
+          ...connectedData
         }));
 
         onSuccess();
-      })
+    })
       .catch((error: any) => {
         connectedData.connected = false;
         // connectWalletError = error;
         localStorage.removeItem("WEB3_CONNECT_CACHED_PROVIDER");
         localStorage.removeItem("cachedProvider");
-        console.log("error connecting wallet");
+        console.log(error, "error connecting wallet");
       });
   };
 

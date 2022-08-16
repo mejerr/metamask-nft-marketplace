@@ -11,6 +11,7 @@
     const initConnection = async () => {
       await connectWallet();
     };
+
     if (localStorage.getItem("cachedProvider")) {
       initConnection();
     }
