@@ -1,18 +1,23 @@
 <script lang="ts">
   import { Button } from "../../components";
+  import Createfields from "./CreateFields.svelte";
 
   export let header: string = "";
 </script>
 
 <div class="create-block-wrapper">
   <div class="header">{header}</div>
-  <div class="required-fields" />
+  <Createfields />
   <div class="create-btn">
     <Button title="Create" />
   </div>
 </div>
 
 <style>
+  .create-block-wrapper {
+    padding-bottom: 20px;
+  }
+
   .header {
     font-size: 40px;
     font-weight: bold;

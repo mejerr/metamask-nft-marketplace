@@ -1,11 +1,29 @@
 <script lang="ts">
+  import { setContext } from "svelte";
+  import { createKey } from "../../lib/helpers/keys";
+  import { uploadPicture } from "../../lib/helpers/utilities";
   import Createblock from "./Createblock.svelte";
 
   let activeTab: number = 1;
+  let nftFileUrl: string = "";
+  let collectionFileUrl: string = "";
 
   const onClick = () => {
     activeTab = activeTab === 1 ? 2 : 1;
   };
+
+  const onUploadPicture = async (e: any) => {
+    const file = e.target.files[0];
+    if (!file) return;
+
+    const url = await uploadPicture(file);
+    activeTab === 1 ? (nftFileUrl = url) : (collectionFileUrl = url);
+  };
+
+  setContext(createKey, {
+    fileUrl: activeTab === 1 ? nftFileUrl : collectionFileUrl,
+    onImageChange: onUploadPicture,
+  });
 </script>
 
 <div class="create-page-wrapper">
