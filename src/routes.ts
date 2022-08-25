@@ -13,5 +13,4 @@ export default {
 
     // Catch-all, must be last
     '*': Homepage,
-
 }
